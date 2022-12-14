@@ -9,6 +9,7 @@ import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class VendingMachineCLI {
 
@@ -32,28 +33,32 @@ public class VendingMachineCLI {
 
 	private Menu menu;
 
+	Map<String, Product> productMap = new TreeMap<>();
+
 	public VendingMachineCLI(Menu menu) {
 		this.menu = menu;
 	}
 
 	public void run() {
+
+		try (Scanner inventoryScanner = new Scanner(inventoryFile)) {
+			while (inventoryScanner.hasNextLine()) {
+				String currentLine = inventoryScanner.nextLine();
+				String[] splitString = currentLine.split("\\|");
+				productMap.put(splitString[0], new Product(splitString[0], splitString[1], Double.parseDouble(splitString[2]), splitString[3]));
+			}
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+
 		while (true) {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 
 			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
-				// display vending machine items // create new method to display items from map
-				Map<String, Product> productMap = new HashMap<>();
-				try (Scanner inventoryScanner = new Scanner(inventoryFile)) {
-					while (inventoryScanner.hasNextLine()) {
-						String currentLine = inventoryScanner.nextLine();
-						String[] splitString = currentLine.split("\\|");
-						productMap.put(splitString[0], new Product(splitString[0], splitString[1], Double.parseDouble(splitString[2]), splitString[3]));
-					}
-				} catch (FileNotFoundException e) {
-					throw new RuntimeException(e);
-				}
+				// display vending machine items
+
 				for (Map.Entry<String, Product> product : productMap.entrySet()) {
-					System.out.println(product.getValue().getProductName());
+					System.out.println(product.getKey() + ": " + product.getValue().getProductName() + " " + dollarFormat.format(product.getValue().getPrice()) + " " + product.getValue().getQuantity() + " in stock");
 				}
 
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
@@ -62,21 +67,27 @@ public class VendingMachineCLI {
 				//BOOKMARK **********************************************************
 
 				while (true) {
+
 					System.out.println("Current Money Provided: " + dollarFormat.format(balance));
 					String customerChoice = (String) menu.getChoiceFromOptions(CUSTOMER_OPTIONS);
 					if (customerChoice.equals(CUSTOMER_OPTION_FEED_MONEY)) {
 						System.out.println("How many whole dollars did you deposit?");
-						try (Scanner input = new Scanner(System.in)) {
-							double depositAmount = input.nextDouble();
-							balance += depositAmount;
-						} catch (RuntimeException e) {
-							throw new RuntimeException(e);
+							balance += menu.getDepositAmount();
+
+							} else if (choice.equals(CUSTOMER_OPTION_SELECT_PRODUCT)){
+						for (Map.Entry<String, Product> product : productMap.entrySet()) {
+							System.out.println(product.getKey() + ": " + product.getValue().getProductName() + " " + dollarFormat.format(product.getValue().getPrice()) + " " + product.getValue().getQuantity() + " in stock");
 						}
+						System.out.println("Type the code for your item to select it for purchase:");
+
+
+
+
+					}
 					}
 				}
 			}
 		}
-	}
 		public static void main (String[]args){
 			Menu menu = new Menu(System.in, System.out);
 			VendingMachineCLI cli = new VendingMachineCLI(menu);

@@ -19,8 +19,10 @@ import java.util.Map;
 
         private Map<String,Double> products;
 
+        private int quantity = 5;
 
-        public Product(String productLocation, String productName,  double price, String type) {
+
+        public Product(String productLocation, String productName, double price, String type) {
 
             this.productLocation = productLocation;
             this.productName = productName;
@@ -31,6 +33,13 @@ import java.util.Map;
 
         // a display() method to list all items
         // a sales_report() method
+        public int getQuantity() {
+            return quantity;
+        }
+
+        public void setQuantity(int quantity) {
+            this.quantity = quantity;
+        }
 
 
         public String getProductName() {

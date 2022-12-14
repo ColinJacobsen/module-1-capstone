@@ -50,4 +50,12 @@ public class Menu {
 		out.print(System.lineSeparator() + "Please choose an option >>> ");
 		out.flush();
 	}
+
+	public double getDepositAmount (){
+		return in.nextDouble();
+	}
+	public String getLocation(){
+		return in.nextLine();
+	}
+
 }

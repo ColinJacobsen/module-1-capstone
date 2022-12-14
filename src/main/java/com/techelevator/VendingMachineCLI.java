@@ -72,21 +72,38 @@ public class VendingMachineCLI {
 					String customerChoice = (String) menu.getChoiceFromOptions(CUSTOMER_OPTIONS);
 					if (customerChoice.equals(CUSTOMER_OPTION_FEED_MONEY)) {
 						System.out.println("How many whole dollars did you deposit?");
-							balance += menu.getDepositAmount();
+						balance += menu.getDepositAmount();
 
-							} else if (choice.equals(CUSTOMER_OPTION_SELECT_PRODUCT)){
+					} else if (customerChoice.equals(CUSTOMER_OPTION_SELECT_PRODUCT)) {
 						for (Map.Entry<String, Product> product : productMap.entrySet()) {
 							System.out.println(product.getKey() + ": " + product.getValue().getProductName() + " " + dollarFormat.format(product.getValue().getPrice()) + " " + product.getValue().getQuantity() + " in stock");
 						}
-						System.out.println("Type the code for your item to select it for purchase:");
+						System.out.println("Type the code for your item to select it for purchase (case sensitive):");
+						String purchaseLocation = menu.getLocation();
+						if (productMap.containsKey(purchaseLocation)) {
+							balance -= productMap.get(purchaseLocation).getPrice();
+							System.out.println(productMap.get(purchaseLocation).getProductName() + " " + productMap.get(purchaseLocation).getPrice() + " " + balance);
+							if(productMap.get(purchaseLocation).getType().equalsIgnoreCase("candy")){
+									System.out.println("Munch Munch, Yum!\"");
+								} else if (productMap.get(purchaseLocation).getType().equalsIgnoreCase("chips")){
+									System.out.println("Crunch Crunch, Yum!\"");
+							} else if (productMap.get(purchaseLocation).getType().equalsIgnoreCase("soda")){
+								System.out.println("Glug Glug, Yum!\"");
+							} else if (productMap.get(purchaseLocation).getType().equalsIgnoreCase("gum")){
+								System.out.println("Chew Chew, Yum!\"");
+							}
 
+							int currentQuantity = productMap.get(purchaseLocation).getQuantity();
 
+							productMap.get(purchaseLocation).setQuantity(currentQuantity -= 1);
 
+							//NEED TO TEST AFTER FIXING CONSOLE LOG
 
-					}
+						}
 					}
 				}
 			}
+		}
 		}
 		public static void main (String[]args){
 			Menu menu = new Menu(System.in, System.out);

@@ -33,6 +33,17 @@ import java.util.Map;
 
         // a display() method to list all items
         // a sales_report() method
+
+//        public void sounds() {
+//
+//            if (type.equalsIgnoreCase("candy")) {
+//                System.out.println("Munch Munch, Yum!\"");
+//            } else if (type.equalsIgnoreCase("chips")) {
+//                System.out.println("Crunch Crunch, Yum!\"");
+//            }
+//        }
+
+
         public int getQuantity() {
             return quantity;
         }

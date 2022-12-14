@@ -52,7 +52,8 @@ public class Menu {
 	}
 
 	public double getDepositAmount (){
-		return in.nextDouble();
+		return Double.parseDouble(in.nextLine());
+
 	}
 	public String getLocation(){
 		return in.nextLine();

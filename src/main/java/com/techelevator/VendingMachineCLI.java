@@ -17,33 +17,17 @@ public class VendingMachineCLI {
 
     private static final String MAIN_MENU_OPTION_DISPLAY_ITEMS = "Display Vending Machine Items";
     private static final String MAIN_MENU_OPTION_PURCHASE = "Purchase";
-    private static final String[] MAIN_MENU_OPTIONS = {MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE};
 
-    private static final String CUSTOMER_OPTION_FEED_MONEY = "Feed Money?";
+    private static final String EXIT = "Exit";
+    private static final String GENERATE_SALES_REPORT = "";
+    private static final String[] MAIN_MENU_OPTIONS = {MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, EXIT, GENERATE_SALES_REPORT};
 
+    private static final String CUSTOMER_OPTION_FEED_MONEY = "Feed Money";
     private static final String CUSTOMER_OPTION_SELECT_PRODUCT = "Select Product";
-
-    private static final String CUSTOMER_OPTION_END_TRANSACTION = "End Transaction";
-
-    private static final String GENERATE_SALES_REPORT = null;
-
-    private static final String[] CUSTOMER_OPTIONS = {CUSTOMER_OPTION_FEED_MONEY, CUSTOMER_OPTION_SELECT_PRODUCT, CUSTOMER_OPTION_END_TRANSACTION, GENERATE_SALES_REPORT};
-
-    private static File inventoryFile = new File("vendingmachine.csv");
+    private static final String CUSTOMER_OPTION_END_TRANSACTION = "Finish Transaction";
+    private static final String[] CUSTOMER_OPTIONS = new String[]{CUSTOMER_OPTION_FEED_MONEY, CUSTOMER_OPTION_SELECT_PRODUCT, CUSTOMER_OPTION_END_TRANSACTION};
 
     private double balance = 0.0;
-
-    private static final double QUARTER_VALUE = .25;
-
-    private static final double DIME_VALUE = .10;
-
-    private static final double NICKEL_VALUE = .05;
-
-    private static int numberOfQuarters;
-
-    private static int numberOfDimes;
-
-    private static int numberOfNickels;
 
     NumberFormat dollarFormat = NumberFormat.getCurrencyInstance();
 
@@ -51,13 +35,6 @@ public class VendingMachineCLI {
 
     Map<String, Product> productMap = new TreeMap<>();
 
-    public Map<String, Product> getProductMap() {
-        return productMap;
-    }
-
-    public void setProductMap(Map<String, Product> productMap) {
-        this.productMap = productMap;
-    }
 
     public double getBalance() {
         return balance;
@@ -73,7 +50,7 @@ public class VendingMachineCLI {
 
     public void run() {
 
-        try (Scanner inventoryScanner = new Scanner(inventoryFile)) {
+        try (Scanner inventoryScanner = new Scanner(new File("vendingmachine.csv"))) {
             while (inventoryScanner.hasNextLine()) {
                 String currentLine = inventoryScanner.nextLine();
                 String[] splitString = currentLine.split("\\|");
@@ -90,12 +67,17 @@ public class VendingMachineCLI {
                 // display vending machine items
                 for (Map.Entry<String, Product> product : productMap.entrySet()) {
                     if (product.getValue().getQuantity() > 0) {
-                        System.out.println(product.getKey() + ": " + product.getValue().getProductName() + " " + dollarFormat.format(product.getValue().getPrice()) + " " + product.getValue().getQuantity() + " in stock");
+                        System.out.print(product.getKey() + ": " + product.getValue().getProductName() + " " + dollarFormat.format(product.getValue().getPrice()) + " " + product.getValue().getQuantity() + " in stock");
                     } else {
-                        System.out.println(product.getValue().getProductName() + ": SOLD OUT");
+                        System.out.print(product.getValue().getProductName() + ": SOLD OUT");
 
                     }
-
+                    if(product.getKey().charAt(1) == '4'){
+                        System.out.println();
+                    }
+                    else{
+                        System.out.print(" | ");
+                    }
                 }
             } else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
                 // do purchase
@@ -103,10 +85,10 @@ public class VendingMachineCLI {
 
                 while (true) {
 
-                    System.out.println("Current Money Provided: " + dollarFormat.format(balance));
+                    System.out.println("\nCurrent Money Provided: " + dollarFormat.format(balance));
                     String customerChoice = (String) menu.getChoiceFromOptions(CUSTOMER_OPTIONS);
                     if (customerChoice.equals(CUSTOMER_OPTION_FEED_MONEY)) {
-                        System.out.println("How many whole dollars did you deposit?");
+                        System.out.println("Deposit money. Dollar bills only.");
                         double depositAmount = menu.getDepositAmount();
                         balance += depositAmount;
 
@@ -122,53 +104,45 @@ public class VendingMachineCLI {
                             }
                         }
 
-                            System.out.println("Type the code for your item to select it for purchase (case sensitive):");
-                            String purchaseLocation = menu.getLocation();
-                            if (productMap.get(purchaseLocation).getQuantity() > 0) {
+                        System.out.println("Type the code for your item to select it for purchase:");
+                        String purchaseLocation = menu.getLocation(productMap);
+                        if (productMap.get(purchaseLocation).getQuantity() > 0) {
 
-                                if (balance >= productMap.get(purchaseLocation).getPrice()) {
-                                    if (productMap.containsKey(purchaseLocation)) {
-                                        balance -= productMap.get(purchaseLocation).getPrice();
-                                        System.out.println("You purchased " + productMap.get(purchaseLocation).getProductName() + " for " + dollarFormat.format(productMap.get(purchaseLocation).getPrice()) + ". Your remaining balance is: " + dollarFormat.format(balance));
-                                        if (productMap.get(purchaseLocation).getType().equalsIgnoreCase("candy")) {
-                                            System.out.println("Munch Munch, Yum!");
-                                        } else if (productMap.get(purchaseLocation).getType().equalsIgnoreCase("chips")) {
-                                            System.out.println("Crunch Crunch, Yum!");
-                                        } else if (productMap.get(purchaseLocation).getType().equalsIgnoreCase("soda")) {
-                                            System.out.println("Glug Glug, Yum!");
-                                        } else if (productMap.get(purchaseLocation).getType().equalsIgnoreCase("gum")) {
-                                            System.out.println("Chew Chew, Yum!");
-                                        }
+                            if (balance >= productMap.get(purchaseLocation).getPrice()) {
+                                if (productMap.containsKey(purchaseLocation)) {
+                                    balance -= productMap.get(purchaseLocation).getPrice();
+                                    System.out.println("You purchased " + productMap.get(purchaseLocation).getProductName() + " for " + dollarFormat.format(productMap.get(purchaseLocation).getPrice()) + ". Your remaining balance is: " + dollarFormat.format(balance));
 
-                                        int currentQuantity = productMap.get(purchaseLocation).getQuantity();
+                                    // getType() has if-else that prints sounds, gets type from the key location in Map
+                                    productMap.get(purchaseLocation).getType();
 
-                                        productMap.get(purchaseLocation).setQuantity(currentQuantity -= 1);
 
-                                        VendingMachineLog.logPurchase(productMap.get(purchaseLocation), balance);
+                                    int currentQuantity = productMap.get(purchaseLocation).getQuantity();
 
-                                    }
-                                } else System.out.println("Insufficient balance, please insert more funds");
-                            } else System.out.println("Item is sold out");
-                        }
-                    else if(customerChoice.equals(CUSTOMER_OPTION_END_TRANSACTION)){
-                        double oldBalance = balance;
-                        numberOfQuarters = (int) (balance/QUARTER_VALUE);
-                        numberOfDimes = (int)((balance-(numberOfQuarters*QUARTER_VALUE))/DIME_VALUE);
-                        numberOfNickels = (int)((balance-((numberOfQuarters*QUARTER_VALUE)+(numberOfDimes*DIME_VALUE)))/NICKEL_VALUE);
-                        System.out.println("Your change is: " + dollarFormat.format(balance));
-                        System.out.println("You should receive " + numberOfQuarters + " quarters, " + numberOfDimes + " dimes, and " + numberOfNickels + " nickels.");
+                                    productMap.get(purchaseLocation).setQuantity(currentQuantity - 1);
+
+                                    VendingMachineLog.logPurchase(productMap.get(purchaseLocation), balance);
+
+                                }
+                            } else System.out.println("Insufficient balance, please insert more funds");
+                        } else System.out.println("Item is sold out");
+                    }
+                    else if(customerChoice.equals(CUSTOMER_OPTION_END_TRANSACTION)){double oldBalance = balance;
+
+                        makeChange(balance);
+
                         balance = 0;
                         VendingMachineLog.logExit(dollarFormat.format(oldBalance), dollarFormat.format(balance));
 
                         break;
                     }
-                    else if (customerChoice.equals(GENERATE_SALES_REPORT)){
-                        SalesReport.generateSalesReport(productMap);
-                    }
-                    }
+
                 }
+            } else if (choice.equals(GENERATE_SALES_REPORT)){
+                SalesReport.generateSalesReport(productMap);
             }
         }
+    }
 
     public static void main(String[] args) {
         Menu menu = new Menu(System.in, System.out);
@@ -176,5 +150,32 @@ public class VendingMachineCLI {
         cli.run();
 
     }
+
+    public double makeChange(double balance){
+
+        int quarters = (int) (balance / 25);
+        int remainder = (int) (balance % 25);
+
+        int dimes = remainder / 10;
+        remainder = remainder % 10;
+
+        int nickels = remainder / 5;
+        remainder = remainder % 5;
+
+        int cents = remainder;
+
+        System.out.println("From " + dollarFormat.format(balance) + " cents you get");
+        System.out.println(quarters + " quarters");
+        System.out.println(dimes + " dimes");
+        System.out.println(nickels + " nickels");
+        System.out.println(cents + " cents");
+
+        return balance;
+    }
+
+    public String formatMoney(double numberToBeConverted) {
+        return dollarFormat.format(numberToBeConverted);
+    }
+
 
 }

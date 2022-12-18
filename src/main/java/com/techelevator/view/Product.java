@@ -36,6 +36,7 @@ public class Product {
         this.productName = productName;
     }
 
+    //prints out the type when needed for the user experience
     public String getType() {
 
         if (type.equals("Candy")) {

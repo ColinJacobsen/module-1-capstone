@@ -21,24 +21,28 @@ public class SalesReport {
     public static void generateSalesReport(Map<String, Product> productMap) {
         NumberFormat dollarFormat = NumberFormat.getCurrencyInstance();
 
+        //keep track of to money made
         double total = 0;
 
+        //get todays date for salesReport file name
         Date date = new Date();
         String strDateFormat = "HHmmss";
         SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
 
 
 //+ sdf.format(date)
+        //open new SalesReport file
         File salesReport = new File("src/main/resources/SalesReport-" + isoDate + "-" + sdf.format(date) + ".txt");
-        System.out.println((salesReport).getAbsolutePath());
+        //System.out.println((salesReport).getAbsolutePath());
 
+        //print required data to new SalesReport
         try {
-
+            //open writer
             if (writer == null) {
                 writer = new PrintWriter(new BufferedWriter(new FileWriter(salesReport, true)));
 
             }
-
+            //move through productMap, printing required data
             for (Map.Entry<String, Product> product : productMap.entrySet()) {
 
                 writer.printf("%-20s %s %2d\n", product.getValue().getProductName(), "|", (5 - (product.getValue().getQuantity())));
@@ -52,7 +56,7 @@ public class SalesReport {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        writer.flush();
+        writer.flush();  //need to flush data before close, so that data in stream gets push to file
 
 
     }

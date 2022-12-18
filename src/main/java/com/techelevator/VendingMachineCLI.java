@@ -15,41 +15,44 @@ import java.util.TreeMap;
 
 public class VendingMachineCLI {
 
+    public VendingMachineCLI(Menu menu) {
+        this.menu = menu;
+    }
+
+    //bunch of constant magic variables to hold the strings that we'll show the customer
     private static final String MAIN_MENU_OPTION_DISPLAY_ITEMS = "Display Vending Machine Items";
     private static final String MAIN_MENU_OPTION_PURCHASE = "Purchase";
-
     private static final String EXIT = "Exit";
     private static final String GENERATE_SALES_REPORT = "";
     private static final String[] MAIN_MENU_OPTIONS = {MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, EXIT, GENERATE_SALES_REPORT};
-
     private static final String CUSTOMER_OPTION_FEED_MONEY = "Feed Money";
     private static final String CUSTOMER_OPTION_SELECT_PRODUCT = "Select Product";
     private static final String CUSTOMER_OPTION_END_TRANSACTION = "Finish Transaction";
     private static final String[] CUSTOMER_OPTIONS = new String[]{CUSTOMER_OPTION_FEED_MONEY, CUSTOMER_OPTION_SELECT_PRODUCT, CUSTOMER_OPTION_END_TRANSACTION};
 
     private double balance = 0.0;
-
-    NumberFormat dollarFormat = NumberFormat.getCurrencyInstance();
-
-    private Menu menu;
-
-    Map<String, Product> productMap = new TreeMap<>();
-
-
     public double getBalance() {
         return balance;
     }
-
     public void setBalance(double balance) {
         this.balance = balance;
     }
 
-    public VendingMachineCLI(Menu menu) {
-        this.menu = menu;
-    }
+    //used for showing dollar amounts to user
+    NumberFormat dollarFormat = NumberFormat.getCurrencyInstance();
+
+    //broadly, where our user interface functions are located.
+    private Menu menu;
+
+    //will hold all the products in the vending machine. key=location, value=product class
+    Map<String, Product> productMap = new TreeMap<>();
+
+
+
+
 
     public void run() {
-
+        //load vending machine file information into productMap variable
         try (Scanner inventoryScanner = new Scanner(new File("vendingmachine.csv"))) {
             while (inventoryScanner.hasNextLine()) {
                 String currentLine = inventoryScanner.nextLine();
@@ -61,8 +64,10 @@ public class VendingMachineCLI {
         }
 
         while (true) {
+            //give user options and get their response
             String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 
+            //use the user response to determine what to do
             if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
                 // display vending machine items
                 for (Map.Entry<String, Product> product : productMap.entrySet()) {
@@ -81,20 +86,20 @@ public class VendingMachineCLI {
                 }
             } else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
                 // do purchase
-
-
                 while (true) {
-
                     System.out.println("\nCurrent Money Provided: " + dollarFormat.format(balance));
+                    //give user options and get their response
                     String customerChoice = (String) menu.getChoiceFromOptions(CUSTOMER_OPTIONS);
+                    //use the user response to determine what to do
                     if (customerChoice.equals(CUSTOMER_OPTION_FEED_MONEY)) {
+                        //let customer add money to their balance
                         System.out.println("Deposit money. Dollar bills only.");
                         double depositAmount = menu.getDepositAmount();
                         balance += depositAmount;
-
                         VendingMachineLog.logDeposit(dollarFormat.format(depositAmount), dollarFormat.format(balance));
 
                     } else if (customerChoice.equals(CUSTOMER_OPTION_SELECT_PRODUCT)) {
+                        //print out the available options for user
                         for (Map.Entry<String, Product> product : productMap.entrySet()) {
                             if (product.getValue().getQuantity() > 0) {
                                 System.out.println(product.getKey() + ": " + product.getValue().getProductName() + " " + dollarFormat.format(product.getValue().getPrice()) + " " + product.getValue().getQuantity() + " in stock");
@@ -103,7 +108,7 @@ public class VendingMachineCLI {
 
                             }
                         }
-
+                        //get user's choice
                         System.out.println("Type the code for your item to select it for purchase:");
                         String purchaseLocation = menu.getLocation(productMap);
                         if (productMap.get(purchaseLocation).getQuantity() > 0) {
@@ -115,18 +120,15 @@ public class VendingMachineCLI {
 
                                     // getType() has if-else that prints sounds, gets type from the key location in Map
                                     productMap.get(purchaseLocation).getType();
-
-
                                     int currentQuantity = productMap.get(purchaseLocation).getQuantity();
-
                                     productMap.get(purchaseLocation).setQuantity(currentQuantity - 1);
-
                                     VendingMachineLog.logPurchase(productMap.get(purchaseLocation), balance);
 
                                 }
                             } else System.out.println("Insufficient balance, please insert more funds");
                         } else System.out.println("Item is sold out");
                     }
+                    //if customer ends transaction, give them their balance
                     else if(customerChoice.equals(CUSTOMER_OPTION_END_TRANSACTION)){double oldBalance = balance;
 
                         makeChange(balance);
@@ -144,6 +146,7 @@ public class VendingMachineCLI {
         }
     }
 
+    //start program here
     public static void main(String[] args) {
         Menu menu = new Menu(System.in, System.out);
         VendingMachineCLI cli = new VendingMachineCLI(menu);

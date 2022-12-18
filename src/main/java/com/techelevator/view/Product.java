@@ -8,7 +8,7 @@ public class Product {
     private String type;
     private int quantity = 5;
 
-    private Map<String,Double> products;
+    //private Map<String,Double> products;
 
 
     public Product(String slotLocation, String productName, double price, String type) {
@@ -70,12 +70,12 @@ public class Product {
         this.slotLocation = productLocation;
     }
 
-    public Map<String, Double> getProducts() {
-        return products;
-    }
-
-    public void setProducts(Map<String, Double> products) {
-        this.products = products;
-    }
+//    public Map<String, Double> getProducts() {
+//        return products;
+//    }
+//
+//    public void setProducts(Map<String, Double> products) {
+//        this.products = products;
+//    }
 
 }

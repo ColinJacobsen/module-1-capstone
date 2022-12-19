@@ -16,6 +16,7 @@ public class Menu {
         this.in = new Scanner(input);
     }
 
+    //loops through an array, printing each element, and asking user which one they'd like to select by typing 1,2,3...
     public Object getChoiceFromOptions(Object[] options) {
         Object choice = null;
         while (choice == null) {
@@ -25,6 +26,7 @@ public class Menu {
         return choice;
     }
 
+    //part of above function, gets user input (1,2,3...)
     private Object getChoiceFromUserInput(Object[] options) {
         Object choice = null;
         String userInput = in.nextLine();
@@ -42,7 +44,12 @@ public class Menu {
         return choice;
     }
 
+<<<<<<< HEAD
     public void displayMenuOptions(Object[] options) {
+=======
+    //loops through an array and prints first 3 elements to console
+    private void displayMenuOptions(Object[] options) {
+>>>>>>> 57a35ce2c98151280bb1688b6a6d6981dc0a8bbe
         out.println();
 
         for (int i = 0; i < options.length; i++) {
@@ -55,6 +62,7 @@ public class Menu {
         out.flush();
     }
 
+    //asks user for integer to deposit and returns it
     public double getDepositAmount() {
         while (true) {
             double x = Double.parseDouble(in.nextLine());
@@ -69,6 +77,7 @@ public class Menu {
         }
     }
 
+    //asks user for location i.e. A9, and returns it
     public String getLocation(Map<String, Product> map) {
         while (true) {
             String input = in.nextLine().toUpperCase();

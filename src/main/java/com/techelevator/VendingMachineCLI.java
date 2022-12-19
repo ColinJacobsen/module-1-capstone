@@ -39,6 +39,7 @@ public class VendingMachineCLI {
     private static final String CUSTOMER_OPTION_END_TRANSACTION = "Finish Transaction";
     private static final String[] CUSTOMER_OPTIONS = new String[]{CUSTOMER_OPTION_FEED_MONEY, CUSTOMER_OPTION_SELECT_PRODUCT, CUSTOMER_OPTION_END_TRANSACTION};
 
+    //private Customer customer;
     public boolean usingGUI = false;
 
     public boolean isUsingGUI() {

@@ -38,6 +38,7 @@ public class Product {
         this.productName = productName;
     }
 
+    //prints out the type when needed for the user experience
     public String getType() {
 
 //        if()
@@ -73,6 +74,7 @@ public class Product {
         this.slotLocation = productLocation;
     }
 
+<<<<<<< HEAD
    // public Map<String, Double> getProducts() {
    //     return products;
    // }
@@ -80,5 +82,14 @@ public class Product {
    // public void setProducts(Map<String, Double> products) {
     //    this.products = products;
    // }
+=======
+//    public Map<String, Double> getProducts() {
+//        return products;
+//    }
+//
+//    public void setProducts(Map<String, Double> products) {
+//        this.products = products;
+//    }
+>>>>>>> 57a35ce2c98151280bb1688b6a6d6981dc0a8bbe
 
 }

@@ -15,6 +15,7 @@
 12/14/22 22:23:22 PM Triplemint D4 0.75 $9.25
 12/14/22 22:24:01 PM FEED MONEY: $10.00 $10.00
 12/14/22 22:24:05 PM Wonka Bar B3 $1.50 $8.50
+<<<<<<< HEAD
 12/15/22 10:16:35 AM FEED MONEY: $10.00 $10.00
 12/15/22 10:16:44 AM Triplemint D4 $0.75 $9.25
 12/15/22 10:17:22 AM Cola C1 $1.25 $8.00
@@ -178,3 +179,5 @@
 12/18/22 18:08:11 PM Vending Machine Program Started
 12/18/22 18:10:45 PM Vending Machine Program Started
 12/18/22 18:16:54 PM Vending Machine Program Started
+=======
+>>>>>>> 57a35ce2c98151280bb1688b6a6d6981dc0a8bbe

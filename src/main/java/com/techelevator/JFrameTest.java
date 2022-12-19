@@ -1,19 +1,14 @@
 package com.techelevator;
 
 import com.techelevator.view.*;
-import com.techelevator.VendingMachineCLI;
 import com.techelevator.view.Menu;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.FileAlreadyExistsException;
 import java.util.*;
 import java.util.List;
-import java.util.jar.JarEntry;
+
 
 public class JFrameTest implements ActionListener {
 
@@ -117,7 +112,7 @@ public class JFrameTest implements ActionListener {
         balanceDisplayPanel.add(currentBalanceDisplay);
 
 
-        mainMenuSubmit.setText("EnterM");
+        mainMenuSubmit.setText("Enter");
         mainMenuSubmit.setBounds(270, 90, 100, 135);
         mainMenuSubmit.addActionListener(new ActionListener() {
             @Override
@@ -132,7 +127,7 @@ public class JFrameTest implements ActionListener {
             }
         });
 
-        purchaseMenuSubmit.setText("EnterPu");
+        purchaseMenuSubmit.setText("Enter");
         purchaseMenuSubmit.setVisible(false);
         purchaseMenuSubmit.setBounds(270, 90, 100, 135);
         purchaseMenuSubmit.addActionListener(new ActionListener() {
@@ -146,7 +141,7 @@ public class JFrameTest implements ActionListener {
                 }
             }
         });
-        selectProductSubmit.setText("EnterSP");
+        selectProductSubmit.setText("Enter");
         selectProductSubmit.setVisible(false);
         selectProductSubmit.setBounds(270, 90, 100, 135);
         selectProductSubmit.addActionListener(new ActionListener() {
@@ -156,7 +151,7 @@ public class JFrameTest implements ActionListener {
                 userInputTextField.setText("");
                 makePurchase(userInput);
                 productDisplayPanel.setVisible(false);
-                generateProductDisplay(productMap);
+                generateProductDisplay(productMap,true);
                 productDisplayPanel.setVisible(true);
 
             }
@@ -269,9 +264,7 @@ public class JFrameTest implements ActionListener {
         frame.add(purchaseMenuQuestions);
 
 
-        feedMoneyPanel.setLayout(new
-
-                FlowLayout(FlowLayout.LEFT, 30, 30));
+        feedMoneyPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 30, 50));
         feedMoneyPanel.setBackground(Color.lightGray);
         feedMoneyPanel.setBounds(380, 0, 610, 575);
 
@@ -294,7 +287,7 @@ public class JFrameTest implements ActionListener {
 
         for (String feed_Button : FEED_MONEY_BUTTONS) {
             JButton button = new JButton(feed_Button);
-            button.setPreferredSize(new Dimension(150, 60));
+            button.setPreferredSize(new Dimension(156, 66));
             button.setFont(new Font("Arial", Font.PLAIN, 18));
             button.addActionListener(feedMoneyButtonClick);
             button.setFocusable(false);
@@ -305,7 +298,7 @@ public class JFrameTest implements ActionListener {
 
         }
 
-        feedMoneyButtons.setLayout(new FlowLayout(FlowLayout.LEFT, 50, 50));
+        feedMoneyButtons.setLayout(new FlowLayout(FlowLayout.LEFT, 50, 70));
         feedMoneyButtons.setVisible(false);
         feedMoneyButtons.setBackground(Color.DARK_GRAY);
         feedMoneyButtons.setBounds(0, 0, 260, 475);
@@ -383,7 +376,7 @@ public class JFrameTest implements ActionListener {
     /***** RUN USER INPUT METHODS *****/
     public void runMainMenuChoice(String input) {
         if (Objects.equals(input, "1")) {
-            generateProductDisplay(productMap);
+            generateProductDisplay(productMap, false);
             switchGuiMenu(mainMenuQuestions, productDisplayPanel);
             switchGUISubmitButton(mainMenuSubmit, goBackFromProductDisplayButton);
             //DISPLAY ITEMS
@@ -409,7 +402,7 @@ public class JFrameTest implements ActionListener {
             goBackFromFeedMoneyScreenButton.setVisible(true);
 
         } else if (Objects.equals(input, "2")) {
-            generateProductDisplay(productMap);
+            generateProductDisplay(productMap, true);
             switchGuiMenu(purchaseMenuQuestions, productDisplayPanel);
             switchGUISubmitButton(purchaseMenuSubmit, selectProductSubmit);
             goBackFromPurchaseScreenButton.setVisible(true);
@@ -434,13 +427,18 @@ public class JFrameTest implements ActionListener {
 
 
     /***** GENERATES PRODUCT DISPLAY *****/
-    private List<JButton> generateProductDisplay(Map<String, Product> map) {
+    private List<JButton> generateProductDisplay(Map<String, Product> map, Boolean isPurchaseMenu) {
         productDisplayPanel.removeAll();
-        JButton productDisplayTitle = new JButton("Hover over items to see their price and quantity in stock");
-        productDisplayTitle.setPreferredSize(new Dimension(600, 80));
-        productDisplayTitle.setEnabled(false);
-        productDisplayTitle.setFont(new Font("Arial", Font.BOLD, 14));
-        productDisplayPanel.add(productDisplayTitle);
+        if(isPurchaseMenu) {
+            JButton productDisplayInfo = new JButton("To purchase a product, just type in its code!");
+            productDisplayInfo.setPreferredSize(new Dimension(600, 80));
+            //productDisplayInfo.setEnabled(false);
+            productDisplayInfo.setFont(new Font("Arial", Font.BOLD, 16));
+
+
+            productDisplayPanel.add(productDisplayInfo);
+        }
+
         for (Map.Entry<String, Product> product : map.entrySet()) {
             Product currentProduct = product.getValue();
             JButton button = new JButton(product.getKey() + ": " + currentProduct.getProductName());
@@ -454,6 +452,11 @@ public class JFrameTest implements ActionListener {
             productDisplayButtonsList.add(button);
 
         }
+        JButton productDisplayHint = new JButton("Hint: Hover over items to see their price and quantity in stock");
+        productDisplayHint.setPreferredSize(new Dimension(600, 80));
+        productDisplayHint.setEnabled(false);
+        productDisplayHint.setFont(new Font("Arial", Font.BOLD, 14));
+        productDisplayPanel.add(productDisplayHint);
         return productDisplayButtonsList;
     }
 

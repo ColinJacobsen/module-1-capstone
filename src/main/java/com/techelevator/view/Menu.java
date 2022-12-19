@@ -44,49 +44,47 @@ public class Menu {
         return choice;
     }
 
-<<<<<<< HEAD
     public void displayMenuOptions(Object[] options) {
-=======
-    //loops through an array and prints first 3 elements to console
-    private void displayMenuOptions(Object[] options) {
->>>>>>> 57a35ce2c98151280bb1688b6a6d6981dc0a8bbe
-        out.println();
 
-        for (int i = 0; i < options.length; i++) {
-            if (i < 3) {
-                int optionNum = i + 1;
-                out.println(optionNum + ") " + options[i]);
+        //loops through an array and prints first 3 elements to console
+
+            out.println();
+
+            for (int i = 0; i < options.length; i++) {
+                if (i < 3) {
+                    int optionNum = i + 1;
+                    out.println(optionNum + ") " + options[i]);
+                }
+            }
+            out.print(System.lineSeparator() + "Please choose an option >>> ");
+            out.flush();
+        }
+
+        //asks user for integer to deposit and returns it
+        public double getDepositAmount () {
+            while (true) {
+                double x = Double.parseDouble(in.nextLine());
+                double y = Math.floor(x);
+                if (x <= 0) {
+                    System.out.println("Please enter a positive number.\n");
+                } else if (x != y) {
+                    System.out.println("Please enter whole dollar value\n");
+                } else {
+                    return x;
+                }
             }
         }
-        out.print(System.lineSeparator() + "Please choose an option >>> ");
-        out.flush();
-    }
 
-    //asks user for integer to deposit and returns it
-    public double getDepositAmount() {
-        while (true) {
-            double x = Double.parseDouble(in.nextLine());
-            double y = Math.floor(x);
-            if (x <= 0) {
-                System.out.println("Please enter a positive number.\n");
-            } else if (x != y) {
-                System.out.println("Please enter whole dollar value\n");
-            } else {
-                return x;
+        //asks user for location i.e. A9, and returns it
+        public String getLocation (Map < String, Product > map){
+            while (true) {
+                String input = in.nextLine().toUpperCase();
+                if (map.containsKey(input)) {
+                    return input;
+                } else {
+                    System.out.println("Invalid input, please try another code");
+                }
             }
         }
-    }
 
-    //asks user for location i.e. A9, and returns it
-    public String getLocation(Map<String, Product> map) {
-        while (true) {
-            String input = in.nextLine().toUpperCase();
-            if (map.containsKey(input)) {
-                return input;
-            } else {
-                System.out.println("Invalid input, please try another code");
-            }
-        }
     }
-
-}

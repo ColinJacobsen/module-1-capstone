@@ -46,7 +46,17 @@ public class ProductTest {
     }
     @Test
     public void getTypeLowerCaseTest(){
-        Assert.assertEquals(productMap.get("d1").getType(), "Gum");
+        Assert.assertNull(productMap.get("d1"));
+    }
+    @Test
+    public void shouldBuildProduct(){
+        Product apple = new Product("E1", "apple", .50, "fruit");
+        Assert.assertEquals(apple.getType(), "fruit");
+        Assert.assertEquals(apple.getPrice(), .50, 0);
+        Assert.assertEquals(apple.getSlotLocation(), "E1");
+
+
+
     }
 
 }

@@ -1,4 +1,6 @@
 package com.techelevator.view;
+import com.techelevator.VendingMachineCLI;
+
 import java.util.Map;
 
 public class Product {
@@ -8,7 +10,7 @@ public class Product {
     private String type;
     private int quantity = 5;
 
-    private Map<String,Double> products;
+    //private Map<String,Double> products;
 
 
     public Product(String slotLocation, String productName, double price, String type) {
@@ -38,15 +40,16 @@ public class Product {
 
     public String getType() {
 
-        if (type.equals("Candy")) {
-            System.out.println("Candy clientele! You are my world!");
-        } else if (type.equals("Chips")) {
-            System.out.println("Chip Chip, HOORAY!");
-        } else if (type.equals("Soda")){
-            System.out.println("You are Soda-lightful!");
-        } else if (type.equals("Gum")){
-            System.out.println("Thanks for chew-sing this vending machine!");
-        }
+//        if()
+//        if (type.equals("Candy")) {
+//            System.out.println("Candy swirl! You are my world!");
+//        } else if (type.equals("Chip")) {
+//            System.out.println("Chip Chip, HOORAY!");
+//        } else if (type.equals("Drink")){
+//            System.out.println("You are Soda-lightful!");
+//        } else if (type.equals("Gum")){
+//            System.out.println("Thanks for chew-sing this vending machine!");
+//        }
 
         return type;
     }
@@ -70,12 +73,12 @@ public class Product {
         this.slotLocation = productLocation;
     }
 
-    public Map<String, Double> getProducts() {
-        return products;
-    }
+   // public Map<String, Double> getProducts() {
+   //     return products;
+   // }
 
-    public void setProducts(Map<String, Double> products) {
-        this.products = products;
-    }
+   // public void setProducts(Map<String, Double> products) {
+    //    this.products = products;
+   // }
 
 }

@@ -29,7 +29,7 @@ public class Menu {
         Object choice = null;
         String userInput = in.nextLine();
         try {
-            int selectedOption = Integer.valueOf(userInput);
+            int selectedOption = Integer.parseInt(userInput);
             if (selectedOption > 0 && selectedOption <= options.length) {
                 choice = options[selectedOption - 1];
             }
@@ -42,7 +42,7 @@ public class Menu {
         return choice;
     }
 
-    private void displayMenuOptions(Object[] options) {
+    public void displayMenuOptions(Object[] options) {
         out.println();
 
         for (int i = 0; i < options.length; i++) {

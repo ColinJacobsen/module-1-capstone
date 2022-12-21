@@ -46,7 +46,7 @@ public class Menu {
 
     public void displayMenuOptions(Object[] options) {
 
-        //loops through an array and prints first 3 elements to console
+        //loops through an array and prints first 3 elements to console.  4th element onward become hidden options
 
             out.println();
 

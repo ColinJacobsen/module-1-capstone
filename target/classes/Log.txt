@@ -274,3 +274,38 @@
 12/18/22 23:19:00 PM Vending Machine Program Started
 12/18/22 23:20:40 PM Vending Machine Program Started
 12/18/22 23:22:13 PM Vending Machine Program Started
+12/18/22 23:22:49 PM Vending Machine Program Started
+12/18/22 23:31:39 PM FEED MONEY: $1.00 $1.00
+12/18/22 23:31:40 PM FEED MONEY: $5.00 $6.00
+12/18/22 23:31:42 PM FEED MONEY: $10.00 $16.00
+12/18/22 23:31:43 PM FEED MONEY: $5.00 $21.00
+12/18/22 23:31:45 PM FEED MONEY: $1.00 $22.00
+12/19/22 10:13:23 AM Potato Crisps A1 $3.05 $18.95 Remaining Stock: 4
+12/19/22 10:19:02 AM GIVE CHANGE $18.95 $0.00
+12/19/22 10:19:38 AM FEED MONEY: $1.00 $1.00
+12/19/22 10:19:43 AM FEED MONEY: $5.00 $6.00
+12/19/22 10:19:47 AM FEED MONEY: $10.00 $16.00
+12/19/22 10:20:00 AM Potato Crisps A1 $3.05 $12.95 Remaining Stock: 3
+12/19/22 10:20:13 AM Mountain Melter C3 $1.50 $11.45 Remaining Stock: 4
+12/19/22 10:20:19 AM Dr. Salt C2 $1.50 $9.95 Remaining Stock: 4
+12/19/22 10:20:24 AM Chiclets D3 $0.75 $9.20 Remaining Stock: 4
+12/19/22 10:20:41 AM Potato Crisps A1 $3.05 $6.15 Remaining Stock: 2
+12/19/22 10:20:43 AM Potato Crisps A1 $3.05 $3.10 Remaining Stock: 1
+12/19/22 10:20:45 AM Potato Crisps A1 $3.05 $0.05 Remaining Stock: 0
+12/19/22 10:20:54 AM FEED MONEY: $5.00 $5.05
+12/19/22 10:21:49 AM GIVE CHANGE $5.05 $0.00
+12/20/22 11:09:14 AM Vending Machine Program Started
+12/20/22 11:09:41 AM FEED MONEY: $5.00 $5.00
+12/20/22 11:09:47 AM FEED MONEY: $5.00 $10.00
+12/20/22 11:10:03 AM Potato Crisps A1 $3.05 $6.95 Remaining Stock: 4
+12/20/22 11:10:14 AM GIVE CHANGE $6.95 $0.00
+12/20/22 11:10:43 AM Vending Machine Program Started
+12/20/22 11:22:50 AM Vending Machine Program Started
+12/20/22 11:23:08 AM FEED MONEY: $5.00 $5.00
+12/20/22 11:23:15 AM Potato Crisps A1 $3.05 $1.95 Remaining Stock: 4
+12/20/22 11:23:22 AM GIVE CHANGE $1.95 $0.00
+12/20/22 11:26:26 AM Vending Machine Program Started
+12/20/22 11:28:09 AM FEED MONEY: $5.00 $5.00
+12/20/22 11:28:58 AM Chiclets D3 $0.75 $4.25 Remaining Stock: 4
+12/20/22 12:09:16 PM Vending Machine Program Started
+12/20/22 12:10:51 PM GIVE CHANGE $0.00 $0.00

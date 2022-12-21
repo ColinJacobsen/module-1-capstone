@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.List;
 
 
-public class JFrameTest implements ActionListener {
+public class VendingMachineGUI implements ActionListener {
 
     private JFrame frame;
 
@@ -71,7 +71,7 @@ public class JFrameTest implements ActionListener {
 
     /***** GUI CONSTRUCTOR *****/
 
-    public JFrameTest(Map<String, Product> productMap) {
+    public VendingMachineGUI(Map<String, Product> productMap) {
         this.productMap = productMap;
         initialize();
     }
@@ -81,15 +81,11 @@ public class JFrameTest implements ActionListener {
     JTextField userInputTextField;
 
 
-    /***** COLORS *****/
-
-    // public static final Color DARK_GREEN = new Color(0,153,0);
-
-
     /***** GUI BUILDER *****/
 
     private void initialize() {
         VendingMachineLog.logStart();
+        vendingMachine.usingGUI=true;
 
         frame = new JFrame();
         frame.setLayout(null);
@@ -255,7 +251,7 @@ public class JFrameTest implements ActionListener {
                 Font("Arial", Font.PLAIN, 30));
         purchaseMenuQuestions.add(purchaseMenuQuestion2);
         JLabel productMenuQuestion3 = new JLabel(
-                "(3) Finish Transaction            ");
+                "(3) Dispense Change            ");
         productMenuQuestion3.setFont(new
 
                 Font("Arial", Font.PLAIN, 30));
@@ -409,6 +405,7 @@ public class JFrameTest implements ActionListener {
 
         } else if (Objects.equals(input, "3")) {
             //give change
+
             int[] values = vendingMachine.makeChange(vendingMachine.getBalance());
             JOptionPane.showMessageDialog(frame, "Your change is: " +
                     vendingMachine.dollarFormat.format(vendingMachine.getBalance()) +
@@ -430,7 +427,7 @@ public class JFrameTest implements ActionListener {
     private List<JButton> generateProductDisplay(Map<String, Product> map, Boolean isPurchaseMenu) {
         productDisplayPanel.removeAll();
         if(isPurchaseMenu) {
-            JButton productDisplayInfo = new JButton("To purchase a product, just type in its code!");
+            JButton productDisplayInfo = new JButton("To purchase a product, just enter its code!");
             productDisplayInfo.setPreferredSize(new Dimension(600, 80));
             //productDisplayInfo.setEnabled(false);
             productDisplayInfo.setFont(new Font("Arial", Font.BOLD, 16));
@@ -443,7 +440,7 @@ public class JFrameTest implements ActionListener {
             Product currentProduct = product.getValue();
             JButton button = new JButton(product.getKey() + ": " + currentProduct.getProductName());
             button.setPreferredSize(new Dimension(150, 80));
-            button.setFont(new Font("Arial", Font.PLAIN, 10));
+            button.setFont(new Font("Arial", Font.BOLD, 10));
             button.setFocusable(false);
             button.setToolTipText(vendingMachine.dollarFormat.format(currentProduct.getPrice()) + "     Quantity in Stock: " + currentProduct.getQuantity());
             productDisplayPanel.add(button);

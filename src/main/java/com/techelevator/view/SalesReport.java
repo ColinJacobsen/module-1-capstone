@@ -24,7 +24,7 @@ public class SalesReport {
         //keep track of to money made
         double total = 0;
 
-        //get todays date for salesReport file name
+        //gets today's date for salesReport file name
         Date date = new Date();
         String strDateFormat = "HHmmss";
         SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
@@ -33,7 +33,7 @@ public class SalesReport {
 //+ sdf.format(date)
         //open new SalesReport file
         File salesReport = new File("src/main/resources/SalesReport-" + isoDate + "-" + sdf.format(date) + ".txt");
-        //System.out.println((salesReport).getAbsolutePath());
+
 
         //print required data to new SalesReport
         try {
@@ -57,6 +57,7 @@ public class SalesReport {
             throw new RuntimeException(e);
         }
         writer.flush();  //need to flush data before close, so that data in stream gets push to file
+        writer.close();
 
 
     }

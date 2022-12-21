@@ -11,13 +11,13 @@ import java.util.TreeMap;
 public class VendingMachineCLI {
 
 
-    /*****   START SCREEN   *****/
+    /*****   START SCREEN OPTIONS  *****/
     private static final String START_GUI = "Start GUI";
     private static final String START_COMMAND_LINE = "Start Command Line";
 
     private static final String[] START_MENU_OPTIONS = {START_GUI, START_COMMAND_LINE};
 
-    /*****   MAIN MENU   *****/
+    /*****   MAIN MENU OPTIONS  *****/
 
     private static final String MAIN_MENU_OPTION_DISPLAY_ITEMS = "Display Vending Machine Items";
     private static final String MAIN_MENU_OPTION_PURCHASE = "Purchase";
@@ -27,7 +27,7 @@ public class VendingMachineCLI {
     private static final String GENERATE_SALES_REPORT = "";
     private static final String[] MAIN_MENU_OPTIONS = {MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, EXIT, GENERATE_SALES_REPORT};
 
-    /*****   PURCHASE MENU   *****/
+    /*****   PURCHASE MENU OPTIONS  *****/
 
     private static final String CUSTOMER_OPTION_FEED_MONEY = "Feed Money";
     private static final String CUSTOMER_OPTION_SELECT_PRODUCT = "Select Product";
@@ -80,7 +80,7 @@ public class VendingMachineCLI {
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        JFrameTest vendMachineGUI = new JFrameTest(productMap);
+                        VendingMachineGUI vendMachineGUI = new VendingMachineGUI(productMap);
                         vendMachineGUI.show();
                     }
 
@@ -145,12 +145,11 @@ public class VendingMachineCLI {
     private void displayInventory() {
 
         for (Map.Entry<String, Product> product : productMap.entrySet()) {
-          //  System.out.print(product.getKey() + ": " + product.getValue().getProductName() + " " + dollarFormat.format(product.getValue().getPrice()));
             if (product.getValue().getQuantity() > 0) {
                 System.out.printf("%s %s %-18s %s %d %s",product.getKey(),":",product.getValue().getProductName(),dollarFormat.format(product.getValue().getPrice()),product.getValue().getQuantity(),"in stock");
             } else {
-                System.out.printf("%s %s %-18s %s %s",product.getKey(),":",product.getValue().getProductName(),dollarFormat.format(product.getValue().getPrice()),": SOLD OUT");
-            //    System.out.print(product.getValue().getProductName() + ": SOLD OUT");
+                System.out.printf("%s %s %-18s %s %s",product.getKey(),":",product.getValue().getProductName(),dollarFormat.format(product.getValue().getPrice()),"- SOLD OUT");
+
 
             }
             if (product.getKey().charAt(1) == '4') {
